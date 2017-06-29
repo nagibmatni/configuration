@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/home/nagib/Downloads/NecroBot-0.9.4/PoGo.NecroBot.ConfigUI'
+let g:netrw_dirhist_2='/home/nagib/Downloads/Release/Config'
+let g:netrw_dirhist_3='/home/nagib/.xmonad'
+let g:netrw_dirhist_4='/media/nagib/GLAUBIA/Drive'

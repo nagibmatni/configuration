@@ -1,0 +1,409 @@
+" " vim (um vimrc diferente)
+"
+" original em http://aurelio.net/doc/coluna/coluna-09.vim
+"
+" olas. Creio que o  vim  nao precisa de  apresentacao nao e mesmo? pois
+" bem,  entao que tal explorarmos aquele mundo  misterioso que o arquivo
+" de configuracao  ~/.vimrc  nos apresenta? o que e um vimrc?  oras, este
+" texto todo e um vimrc!  Copie-o para seu  $HOME  e incremente seu vim.
+" ah! Aproveite e leia este texto direto no vim, para ficar colorido.
+"
+" como ja pudemos perceber, linhas que comecam com aspas sao comentarios
+" e nelas podemos soltar o verbo e colocar todo tipo de  informacao util
+" para a manutencao deste arquivo. entao vamos la.
+"
+" para aumentar a esperteza e memorizacao do vim, podemos ter um arquivo
+" ~/.viminfo que guardara dados uteis como seu historico de pesquisas /,
+" linha de comando :, marcas `, registradores, entre outros. entao com o
+" viminfo e  possível copiar uma  linha qualquer (yy),  sair do arquivo,
+" abrir um OUTRO arquivo e colar (p) aquela linha copiada anteriormente.
+" voce pode inclusive nesse intervalo  desligar a maquina e ficar um mes
+" de ferias, que ao voltar o vim  ainda sabera qual foi a linha copiada.
+" nao tem contra-indicacoes. USE!
+"
+" a segunda linha e uma gambiarra para que ao abrir um arquivo, o cursor " ja fique na  posicao que estava na  ultima vez que ele foi  editado. o
+" viminfo guarda a posicao de TODOS os arquivos que voce editou.
+"
+set viminfo='10,\"30,:20,%,n~/.viminfo
+au BufReadPost * if line("'\"")|execute("normal `\"")|endif
+
+" o vim possui uma linguagem de programacao propria,  onde podemos fazer
+" funcoes, e ate aplicativos inteiros, como o  vine (leitor de e-mail) e
+" o jogo sokoban.vim. mais info sobre o assunto consulte www.vim.org.
+"
+" mas, como ja  temos que fazer  nossos proprios programas, temos opcoes
+" mais acessíveis para automatizar tarefas,  como o mapeamento. aqui vai
+" um mapeamento  exclusivo do  modo de insercao (note o i no comeco) que
+" faz a  funcao de completacao automatica  de palavras, procurando-as no
+" proprio arquivo. e facil de usar e nos poupa tempo, alem da certeza de
+" que a palavra completada esta grafada corretamente. entao temos:
+"
+" F7: completa uma palavra
+" F8: da seqüencia a essa palavra
+"
+" os mapeamentos foram  gravados nas teclas F7 e F8,  mas poderia ser em
+" qualquer outra. suponha que voce se chame Zozimo Gwinch Wurstalinewski
+" e digitou seu nome numa parte do texto. depois em outra parte do mesmo
+" texto, voce precisa colocar seu nome novamente. e trabalheira.
+"
+" mas como voce  tem esse super mapeamento,  simplesmente digita Zo<F7> e
+" surpresa! seu primeiro nome foi completado. e para fazer o resto, voce
+" continua completando as palavras seguintes com a tecla <F8>, entao com
+" Zo<F7><F8><F8>, la esta seu nome completo. imbatível.
+"
+" isso e muito muito util ao programar, completando nomes de variaveis e
+" funcoes,  geralmente longos e  difíceis,  e que voce repete  em varias
+" partes do programa.
+"
+
+imap <F7> <c-n>
+imap <F8> <c-x><c-n>
+map ,t :tabnew 
+
+" e se voce tem certos textos  que sempre tem que ficar  digitando, como
+" seu nome completo, seu email, seu endereco,  faca abreviacoes, que sao
+" completadas automaticamente enquanto voce as digita.
+"
+" use abreviacoes para textos normais, para comandos use mapeamentos.
+"
+
+" Abbreviations
+" ------------------------------------------------------------
+iab @@  nmatni at gmail dot com
+iab laps Laboratorio de Processamento de Sinais (LaPS)
+" atalhos para java
+"
+
+"Atalhos para PHP e mysql
+iab pfor for( <left>$i=0;$i<;$i++)<right><right>{}<esc>hhhhhhhhh i
+
+iab pwh while()<right>{<cr><cr>}<esc>kklllllli
+iab prr  print_r( <backspace>$);<left><left>
+iab mq mysql_query( <backspace>$);<left><left>
+"
+abbreviate <? <?php  ?><left><left><cr><cr><up>
+
+
+abbreviate #i #include
+iab mfa mysql_fetch_assoc( <backspace>$);<left><left>
+abbreviate #d #define
+"atalho html
+abbreviate <a <a href=""></a><left><left><left><left><left><left>
+abbreviate <i <img src="" /><left><left><left><left>
+"Para marca a tabulacao"
+""set list lcs=tab:+\ 
+""set list lcs=tab:▸\ ,trail:-,extends:>,precedes:<,eol:¬ 
+set list lcs=tab:▸\ ,trail:\ ,extends:>,precedes:< 
+
+" e como o capitalismo nos obriga a produzir em velocidade insalubre, ao
+" salvar e/ou sair de um arquivo, e comum na pressa digitar o `w` ou `q`
+" em maiusculas, pois voce ainda nao soltou o dedo do  shift que apertou
+" para fazer os dois pontos :.
+"
+" mas nao se desespere!  ate para os problemas econômicos mundiais o vim
+" tem a solucao! basta usarmos abreviacoes para a linha de comando (Cab)
+"
+
+"Atalhos para nao errar na hora de sair ou salvar
+"
+cab W  w
+cab qw wq
+cab Wq wq
+cab wQ wq
+cab WQ wq
+cab Q  q
+cab Qa qa
+cab QA qa
+" Atalhos para o plugin Calendar
+" URL: http://www.vim.org/scripts/script.php?script_id=52
+
+cab C Calendar
+cab CH CalendarH
+
+"Atalho para o plugin Nerd Tree
+map <F2> :NERDTree <cr>
+
+" um mapeamento e na verdade uma  seqüencia de teclas que voce apertaria
+" normalmente no vim,  para fazer a tarefa.  o ENTER e representado  por
+" <cr>, um  crtl+y vira <c-y> e se o  mapeamento exceder uma linha, voce
+" pode quebra-la e comecar a proxima com um escape \.
+"
+" um cuidado especial  deve ser tomado ao nomear um mapeamento, para nao
+" usar  letras ou nomes  que ja sao  comandos do vim.  para evitar isso,
+" sempre inicie o nome de um  mapeamento com uma vírgula. no exemplo, ao
+" digitar ,d no modo de comando (nao e insercao) aparecera a data atual.
+"
+map ,d :r!date<cr>
+      \:s/ \(...\) \(..\).*\(....\)$/, \2 de \1 de \3/<cr>
+      \:nohl<cr>
+" mapeando caracter para quando achar uma palavra 
+" desmarcar, LEMBRAR O GMAIL
+map 8n :nohl<cr>
+
+
+" e tem uma dica boa para os  programadores  de plantao. comentarios num
+" programa sao  excelentes, mas  na hora da  sua manutencao,  eles podem
+" atrapalhar, pois voce queria ver so o codigo.
+"
+" para resolver este problema, vamos fazer um  truque no vim. que tal se
+" pintarmos os comentarios de preto para que fiquem invisíveis?  podemos
+" fazer isso redefinindo o componente da cor da sintaxe.  ah! e quem usa
+" fundo branco (argh) vai ter que trocar `black` por `white`.
+"
+" e como somos chiques ainda criamos uma funcao vim pra fazer o servico.
+" a CommOnOff()  oculta/mostra os comentarios, alternando.  o resumao do
+" que ela faz e: se a variavel global  'hiddcomm'  nao existir, a cria e
+" oculta os comentarios. se ja existir, restaura os comentarios. por fim
+" definimos um mapeamento esperto no F11 para chamar nossa funcao.
+"
+" dica: se voce esta lendo este arquivo no vim, experimente agora mesmo!
+"   :so %
+"   F6
+"   F6
+"
+fu! CommOnOff()
+  if !exists('g:hiddcomm')
+    let g:hiddcomm=1 | hi Comment ctermfg=black guifg=black
+  else
+    unlet g:hiddcomm | hi Comment ctermfg=cyan  guifg=cyan term=bold
+  endif
+endfu
+map <F6> :call CommOnOff()<cr>
+
+" e ja que estamos mexendo com a sintaxe,  que tal trocar a cor do texto
+" daquela selecao que aparece quando voce procura algo com o comando / ?
+" e facil, basta definir a cor do componente da sintaxe. ah sim, a opcao
+" hls (veja abaixo) deve estar ativa.
+" 
+" voce pode colocar as cores que quiser, em ingles. note que e ctermBG e
+" FG, de  background e foreground  (fundo e letra). e veja  tambem que o 
+" IncSearch (busca enquanto voce digita) e invertido!
+"
+hi    Search ctermbg=green ctermfg=black
+hi IncSearch ctermbg=black ctermfg=cyan
+
+" no vim temos diversas opcoes para  modificar seu comportamento atraves
+" do comando set. para ver  todas as opcoes  disponíveis, faca :set all.
+" diversas  opcoes ja veem  ligadas por  padrao, entao vamos  ver apenas
+" algumas mais diferentes.
+"
+" e sempre bom associar a abreviacao da  opcao com o nome em ingles para
+" ficar mais facil a  memorizacao.  no caso das opcoes de busca  abaixo,
+" seus nomes completos sao:
+"   IncrementedSearch, HighLightedSearch, IgnoreCase e SmartCaSe
+"
+set is hls ic scs  "opcoes espertas de busca
+set sm             "oninício do bloco recem fechado
+set sw=4           "ShiftWidth: numero de colunas para o comando >
+set ruler          "regua: mostra a posicao do cursor
+set shm=filmnrwxt  "SHortMessages: encurta as mensagem da regua
+set wildmode=longest,list  "para completacao do TAB igual ao bash
+set number         "para mostrar o numero ao lado
+set title
+" barra de status
+set statusline=%F%m%r%h%w\ [Formato=%{&ff}]\ [Tipo=%Y]\ [Hex=\%02.2B]\ [Posicao=%04l,%04v][%p%%]\ [Numero\ de\ Linhas=%L]
+set laststatus=2
+set cursorline		"mostra a linha do cursor
+set sm
+set noexpandtab
+set tabstop=4
+"hi CursorLine ctermbg=blue cterm=none "coloca cor no linha do cursor
+"set cursorcolumn	"mostra a coluna do cursor
+" geralmente ja e feita no  vimrc do sistema, mas caso ela nao esteja la
+" aqui estao as linhas magicas que trarao a alegria das cores de volta a
+" sua vida:
+"
+set background=dark
+if has("terminfo")
+  set t_Co=8
+  set t_Sf=[3%p1%dm
+  set t_Sb=[4%p1%dm
+else
+  set t_Co=8
+  set t_Sf=[3%dm
+  set t_Sb=[4%dm
+endif
+
+" dizermos: 'use cores'. este comando liga a  sintaxe, que e responsavel
+" por,  dependendo do tipoe de arnuivonir  as varias
+" estruturas do texto, como por exemplo <b>tags</b> num HTML.
+"
+syn on
+
+" outra funcionalidade extremamente  interessante e o autocomando, que e
+" executado  automaticamente  dependendo do  nome ou tipo do arquivo, no
+" seu carregamento ou saída do editor.
+"
+" se voce tem um arquivo com uma extensao qualquer, como .xyz e quer que
+" o vim o interprete como um arquivo HTML,  diga para o vim configurar o
+" ft (FileType)  ao abrir um arquivo novo  (BufNewFile)  ou ja existente
+" (BufRead) com essa extensao.
+"
+au BufNewFile,BufRead *.i set ft=cpp
+au BufNewFile,BufRead *.h set ft=c
+"au FileType xhtml,xml,html so ~/.vim/plugin/html_autoclosetag.vim
+" ou ainda,  se for um arquivo  de um tipo  ja reconhecido pelo vim, use
+" diretamente a opcao FileType. vamos usar de exemplo a linguagem python
+" onde os TABs indicam os blocos de comandos, entao e legal `ve-los`.
+"
+"spell
+au BufNewFile,BufRead *.txt,*.tex set spell
+au BufNewFile,BufRead *.txt,*.tex set spelllang=pt
+"noremap <F7>  :set spell<CR>z=
+"inoremap <F7> <C-O>:set spell<CR><C-O>z=
+
+" para isso definimos uma  regra rapida de sintaxe chamada `pythonTAB` e
+" a ela associamos a cor azul. alem disso definimos algumas opcoes com o
+" comando set e  para fechar,  trocamos a cor  das "strings" para verde,
+" porque aquele rosinha e muito palha. 
+"
+au FileType python syn match pythonTAB '\t\+'
+au FileType python hi pythonTAB ctermbg=blue
+au FileType python set ts=4 tw=80 sw=4 noet
+au FileType python hi pythonString ctermfg=darkgreen
+
+
+au BufNewFile,BufRead *.txt source ~/.vim/syntax/txt.vim          " Carrega o arquivo de sintaxe para TXT
+" e p-p-por hoje e so p-pessoal.
+"
+" --
+" este texto pode ser copiado livremente na íntegra ou em parte, desde que
+" indicado o endereco do original: http://aurelio.net/coluna
+
+""" quando escrever um ( ou { ou {
+""" esse codigo abaixo feicha automaticamente
+""" script que fecha caracteres '(', '{' e '['
+""inoremap ( ()<esc>:call BC_AddChar(")")<cr>i
+"""iab ( ()<left>   Mas pode ser assim tbm
+""inoremap { {}<esc>:call BC_AddChar("}")<cr>i
+"""iab { {}
+""inoremap [ []<esc>:call BC_AddChar("]")<cr>i
+"""iab [ []
+""inoremap " ""<esc>:call BC_AddChar('"')<cr>i
+"""inoremap <? <??><esc>:call BC_AddChar('?>')<cr>i
+""inoremap <C-j> <esc>:call _GetChar()
+""inoremap <C-j> <esc>:call search(BC_GetChar(), "W")<cr>a
+""
+""
+""function! BC_AddChar(schar)
+""    if exists("b:robstack")
+""        let b:robstack = b:robstack . a:schar
+""    else
+""        let b:robstack = a:schar
+""    endif
+""endfunction
+""
+""function! BC_Char()
+""    let l:char = b:robstack[strlen(b:robstack) - 1]
+""    let b:robstack = strpart(b:robstack, 0, strlen(b:robstack) - 1)
+""    return l:char
+""endfunction
+
+" Para chamar as funcoes de insercao no cabecao 
+" basta precionar <F5> para criar um sript em bash
+" ou apertas <F4> para criar um script em pyton
+" implementando script em php
+
+" Cria um cabecalho para scripts bash
+
+function! InsertHeadBash()
+   normal(1G)
+   call append(0, "#!/bin/bash")
+   call append(1, "# Criado em:" . strftime("%a %d/%b/%Y hs %H:%M"))
+   call append(2, "# Org Laps")
+   call append(3, "# Autor: Nagib Matni nmatni@gmail.com")
+   normal($)
+endfun
+map <F5> :call InsertHeadBash()<cr>
+
+" cria um cabecalho para os python scripts
+function! InsertHeadPhp()
+   normal(1G)
+   call append(0, "<?php")
+   call append(1, "#esse script php tem como funcao ...")
+   call append(2, "#Laboratorio de Processamento de Sinais")
+   call append(3, "#version ")
+   call append(5, "#since: " . strftime("%a %d/%b/%Y hs %H:%M"))
+   call append(6, "#author: Nagib C Matni Neto(nmatni@gmail.com) ")
+   call append(7, "?> ")
+   normal($)
+endfun
+map <F4> :call InsertHeadPhp()<cr>
+
+" cria um cabecalho para os python scripts
+function! InsertHeadPy()
+   normal(1G)
+   call append(0, "#!/bin/env python")
+   call append(1, "#vim:ts=4:sw=4:et")
+   call append(2, "")
+   call append(3, "\"\"\"")
+   call append(4, "@since: " . strftime("%a %d/%b/%Y hs %H:%M"))
+   call append(5, "@org:Laboratorio de Processamento de Sinais (LaPS) ")
+   call append(6, "@author: Nagib Coelho Matni Neto (nmatni@gmail.com) \"\"\"")
+   normal($)
+endfun
+map <F3> :call InsertHeadPy()<cr>
+"Recarrega o vim
+" quando fizer alguma alteracao do .vimrc basta
+" apertar a tecla <F12>
+nmap <F7> :<C-u>source $HOME/.vimrc <BAR> echo "Vimrc recarregado!"<CR>
+
+
+" Mover linhas com: Ctrl+(seta abaixo) ou (seta acima)
+" tem que estar em modo normal!
+map <C-k> <esc>ddkP<esc>
+map <C-Up> <esc>ddkP<esc>
+map <C-Down> <esc>ddp<esc>
+map <C-j> <esc>ddp<esc>
+
+"salva com ctrl+s
+"map <C-s> <esc>:w!<esc>
+
+" windows-style key mappings
+" estilo de atalhos do windows
+" copy - copiar
+"vmap <C-C> y
+" paste - colar
+"nmap <C-V> p     "essa funcionalidade vai tirar a selecao por coluna
+"imap <C-V> <C-O>p
+" cut - cortar
+"vmap <C-X> x
+" undo - desfazer
+"noremap <C-Z> u
+"noremap <C-Z> <C-O>u
+" select all - selecionar tudo
+"map <C-a> <esc>ggvG$
+map <F9> ggVGg?
+
+filetype plugin on
+set ofu=syntaxcomplete#Complete
+highlight Pmenu guibg=brown gui=bold
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+autocmd FileType c set omnifunc=ccomplete#Complete
+
+" configure tags - add additional tags here or comment out not-used ones
+ set tags+=~/.vim/tags/cpp
+ set tags+=~/.vim/tags/gl
+ set tags+=~/.vim/tags/sdl
+ set tags+=~/.vim/tags/qt4
+" " build tags of your own project with Ctrl-F12
+map <F12> :!ctags -R --sort=yes --c++-kinds=+pl --fields=+iaS --extra=+q .<CR>
+"
+" " OmniCppComplete
+ let OmniCpp_NamespaceSearch = 1
+ let OmniCpp_GlobalScopeSearch = 1
+ let OmniCpp_ShowAccess = 1
+ let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+ let OmniCpp_MayCompleteDot = 1 " autocomplete after .
+ let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
+ let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
+ let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+" " automatically open and close the popup menu / preview window
+ au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+ set completeopt=menuone,menu,longest,preview
+
